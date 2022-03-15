@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+import database
 
 root = Tk()
 root.title("ACESSO")
@@ -7,7 +8,6 @@ root.geometry("300x130")
 root.attributes('-alpha', 0.9)
 root.resizable(width=False, height=False)
 root.iconbitmap(default='icon/buraco-negro.ico')
-
 
 frame = Frame(root, width=300, height=300, bg='#003989', relief="raise")
 frame.pack(side=TOP)
@@ -22,7 +22,17 @@ senhaLabel.place(x=10, y=40)
 senhaEntry = ttk.Entry(root, width=30)
 senhaEntry.place(x=80, y=43)
 
+def db():
+        Nome = usuarioEntry.get()
+        Password = senhaEntry.get()
+
+        database.cursor.execute("INSERT INTO Users(Name, Password) VALUES (?, ?)", (Nome, Password))
+        database.conn.commit()
+
 enviaButton = ttk.Button(root, text='ENVIA')
-enviaButton.place(x=135, y=80)
+enviaButton.place(x=80, y=80)
+
+registrarButton = ttk.Button(root, text='REGISTRAR', command=db)
+registrarButton.place(x=190, y=80)
 
 root.mainloop()
